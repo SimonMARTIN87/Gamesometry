@@ -1,0 +1,3 @@
+interface Gamepad {
+    vibrationActuator: any;
+}
