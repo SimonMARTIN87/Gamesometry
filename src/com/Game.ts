@@ -1,5 +1,7 @@
 import { ENEMY_MAX_LINEAR_SPEED, FIRE_INPUT_MIN_LENGTH, GAME_LIMITS, MAX_SPAWN_TIME, PLAYER_SIZE, PLAYER_SPEED } from "./Constants";
-import Enemy from "./Enemy";
+import Circle from "./Enemies/Circle";
+import Enemy from "./Enemies/Enemy";
+import Square from "./Enemies/Square";
 import { Entity } from "./Entity";
 import Player from "./Player";
 import { PlayerInputs } from "./PlayerInput";
@@ -63,7 +65,7 @@ export default class Game {
 
         // move enemies
         for (const enemy of this.enemies) {
-            enemy.move();
+            enemy.move(inputs, this.player);
 
             // +  enemy body collision w/ player
             if (enemy.intersect(this.player)) {
@@ -101,7 +103,13 @@ export default class Game {
         while (rdmPos.distanceTo(this.player.position) < PLAYER_SIZE) {
             rdmPos = Vector.getRandomVector(GAME_LIMITS);
         }
-        return new Enemy(rdmPos, Vector.getRandomVector().multByScalar(ENEMY_MAX_LINEAR_SPEED) )
+
+        // TODO: better spawn randomization
+        if (Math.random() < .5) {
+            return new Square(rdmPos, Vector.getRandomVector().multByScalar(ENEMY_MAX_LINEAR_SPEED) );
+        } else {
+            return new Circle(rdmPos, Vector.getRandomVector().multByScalar(ENEMY_MAX_LINEAR_SPEED) );
+        }
     }
 
 }

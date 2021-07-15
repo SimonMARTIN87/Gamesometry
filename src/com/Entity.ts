@@ -13,7 +13,7 @@ export abstract class Entity {
         this.size = size ?? 0;
     }
 
-    abstract move(input?: PlayerInputs): void;
+    abstract move(input?: PlayerInputs, target?: Entity): void;
     
     intersect(other: Entity): boolean {
         if (!this.alive || !other.alive) {

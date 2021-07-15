@@ -1,4 +1,6 @@
 import { ENEMY_HALF_SIZE, ENEMY_SIZE, GAME_LIMITS, LIFE_DISPLAY_SIZE, PLAYER_HALF_SIZE, PLAYER_LIFES, PLAYER_SIZE, PROJECTILE_SIZE } from "../com/Constants";
+import Circle from "../com/Enemies/Circle";
+import Square from "../com/Enemies/Square";
 import Game from "../com/Game";
 import { Vector } from "../com/Vector";
 
@@ -57,12 +59,19 @@ export default class Drawer {
     drawEnemies(game: Game, ctx: CanvasRenderingContext2D) {
         ctx.strokeStyle = 'green';
         for (const enemy of game.enemies) {
-            ctx.strokeRect(
-                enemy.position.x - ENEMY_HALF_SIZE,
-                enemy.position.y - ENEMY_HALF_SIZE,
-                ENEMY_SIZE,
-                ENEMY_SIZE
-            );
+            // TODO: refacto and externalise. This is dirty.
+            if (enemy instanceof Square) {
+                ctx.strokeRect(
+                    enemy.position.x - ENEMY_HALF_SIZE,
+                    enemy.position.y - ENEMY_HALF_SIZE,
+                    ENEMY_SIZE,
+                    ENEMY_SIZE
+                );
+            } else if (enemy instanceof Circle) {
+                ctx.beginPath();
+                ctx.arc(enemy.position.x, enemy.position.y, ENEMY_HALF_SIZE, 0, 2 * Math.PI, false);
+                ctx.stroke();
+            }
         }
 
     }

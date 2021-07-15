@@ -1,10 +1,10 @@
-import { ENEMY_HALF_SIZE, ENEMY_SIZE, GAME_LIMITS } from "./Constants";
-import { Entity } from "./Entity";
-import { PlayerInputs } from "./PlayerInput";
-import Projectile from "./Projectile";
-import { IVector, Vector } from "./Vector";
+import { ENEMY_HALF_SIZE, ENEMY_SIZE, GAME_LIMITS } from "../Constants";
+import { Entity } from "../Entity";
+import { PlayerInputs } from "../PlayerInput";
+import Projectile from "../Projectile";
+import { IVector, Vector } from "../Vector";
 
-export default class Enemy extends Entity {
+export default abstract class Enemy extends Entity {
     lives:number = 3;
     fire_delay: number = 2500;
     last_fire_timestamp: number = 0;
@@ -13,7 +13,7 @@ export default class Enemy extends Entity {
         super(pos, speed, ENEMY_SIZE);
     }
 
-    move(input?: PlayerInputs): void {
+    move(input?: PlayerInputs, target?: Entity): void {
         const tmpPos = new Vector(this.position);
         tmpPos.add(this.speed);
 
