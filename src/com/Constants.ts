@@ -14,3 +14,5 @@ export const PROJECTILE_LIFETIME_MS: number = 1500;
 export const MAX_SPAWN_TIME: number = 4000;
 export const PLAYER_INVINCIBILITY_TIMEFRAME = 1000;
 export const SPECIAL_INPUTS_LATENCY = 1000;
+export const PLAYER_LIFES = 3;
+export const LIFE_DISPLAY_SIZE = 15;

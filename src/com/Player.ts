@@ -1,4 +1,4 @@
-import { FIRE_INPUT_MIN_LENGTH, GAME_LIMITS, PLAYER_HALF_SIZE, PLAYER_INVINCIBILITY_TIMEFRAME, PLAYER_SIZE, PLAYER_SPEED } from "./Constants";
+import { FIRE_INPUT_MIN_LENGTH, GAME_LIMITS, PLAYER_HALF_SIZE, PLAYER_INVINCIBILITY_TIMEFRAME, PLAYER_LIFES, PLAYER_SIZE, PLAYER_SPEED } from "./Constants";
 import { Entity } from "./Entity";
 import { gamePadRumble, PlayerInputs } from "./PlayerInput";
 import Projectile from "./Projectile";
@@ -6,7 +6,7 @@ import Projectile from "./Projectile";
 export default class Player extends Entity {
     fire_delay: number = 250;
     last_fire_timestamp: number = 0;
-    lives: number = 3;
+    lives: number = PLAYER_LIFES;
     is_invincible: boolean = false;
     invincible_until_timestamp: number = 0;
 

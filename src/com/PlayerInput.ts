@@ -1,5 +1,9 @@
 import { Vector } from "./Vector";
 
+// TODO : check axes and buttons order in all browser. Use userAgent for better detection.
+
+export let usedGamePad: number;
+
 export interface PlayerInputs {
     positionInput: Vector;
     fireInput: Vector;
@@ -10,8 +14,17 @@ export interface PlayerInputs {
     }
 };
 
+function getLastUsedGamePad(): Gamepad|null {
+    const pads = Array.from(navigator.getGamepads());
+    pads?.sort( (a,b) => {
+        return (a?.timestamp??0) < (b?.timestamp??0) ? 1 : -1;
+    });
+    
+    return pads ? pads[0] : null;
+}
+
 export function gamePadRumble(force: number, duration: number) {
-    const gamePad = navigator.getGamepads()[0];
+    const gamePad = getLastUsedGamePad();
     if (gamePad) {
         gamePad.vibrationActuator.playEffect("dual-rumble", {
             startDelay: 0,
@@ -23,7 +36,7 @@ export function gamePadRumble(force: number, duration: number) {
 }
 
 export function getCurrentInput(): PlayerInputs {
-    const gamePad = navigator.getGamepads()[0];
+    const gamePad = getLastUsedGamePad();
 
     // L1 = 4
     // R1 = 5

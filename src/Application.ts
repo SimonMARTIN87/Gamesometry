@@ -31,7 +31,7 @@ export default class Application {
         }
 
         // input gamepad events
-        window.addEventListener("gamepadconnected", (e) => {
+        window.addEventListener("gamepadconnected", (e) => {            
             this.pause = false;
             this.displayedMessageForPause = "Pause !";
         });

@@ -1,4 +1,4 @@
-import { ENEMY_HALF_SIZE, ENEMY_SIZE, GAME_LIMITS, PLAYER_HALF_SIZE, PLAYER_SIZE, PROJECTILE_SIZE } from "../com/Constants";
+import { ENEMY_HALF_SIZE, ENEMY_SIZE, GAME_LIMITS, LIFE_DISPLAY_SIZE, PLAYER_HALF_SIZE, PLAYER_LIFES, PLAYER_SIZE, PROJECTILE_SIZE } from "../com/Constants";
 import Game from "../com/Game";
 import { Vector } from "../com/Vector";
 
@@ -27,6 +27,7 @@ export default class Drawer {
             this.drawEnemies(game, ctx);
             this.drawAlliesProjectiles(game, ctx);
             this.drawEnemyProjectiles(game, ctx);
+            this.drawLifes(game, ctx);
         }
     }
 
@@ -79,7 +80,7 @@ export default class Drawer {
     }
 
     drawEnemyProjectiles(game: Game, ctx: CanvasRenderingContext2D) {
-        ctx.strokeStyle = 'purple';
+        ctx.strokeStyle = 'red';
         for (const proj of game.enemies_projectiles) {
             ctx.beginPath();
             ctx.moveTo(proj.position.x, proj.position.y);
@@ -87,6 +88,30 @@ export default class Drawer {
             tmp.add(proj.speed);
             ctx.lineTo(tmp.x, tmp.y);
             ctx.stroke();
+        }
+    }
+
+    drawLifes(game: Game, ctx: CanvasRenderingContext2D) {
+        ctx.strokeStyle = 'black';
+        ctx.fillStyle = 'red';
+        for (let idxLives = 0; idxLives < PLAYER_LIFES; idxLives++) {
+            ctx.beginPath();
+            ctx.moveTo(idxLives*LIFE_DISPLAY_SIZE + 10, 10);
+            ctx.lineTo(idxLives*LIFE_DISPLAY_SIZE + 8,9);
+            ctx.lineTo(idxLives*LIFE_DISPLAY_SIZE + 5,4);
+            ctx.lineTo(idxLives*LIFE_DISPLAY_SIZE + 6,3);
+            ctx.lineTo(idxLives*LIFE_DISPLAY_SIZE + 9,3);
+            ctx.lineTo(idxLives*LIFE_DISPLAY_SIZE + 10,5);
+            ctx.lineTo(idxLives*LIFE_DISPLAY_SIZE + 11,3);
+            ctx.lineTo(idxLives*LIFE_DISPLAY_SIZE + 14,3);
+            ctx.lineTo(idxLives*LIFE_DISPLAY_SIZE + 15,4);
+            ctx.lineTo(idxLives*LIFE_DISPLAY_SIZE + 12,9);
+            ctx.closePath();
+            if (game.player.lives > idxLives) {
+                ctx.fill();
+            } else {
+                ctx.stroke();
+            }
         }
     }
 
